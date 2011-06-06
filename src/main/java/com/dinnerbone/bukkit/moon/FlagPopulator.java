@@ -11,7 +11,7 @@ import org.bukkit.block.BlockState;
 import org.bukkit.block.Sign;
 import org.bukkit.generator.BlockPopulator;
 
-public class FlagPopulator implements BlockPopulator {
+public class FlagPopulator extends BlockPopulator {
     private static final int FLAG_CHANCE = 1; // Out of 200
     private static final int FLAG_HEIGHT = 3;
 
