@@ -4,6 +4,7 @@ version: 0.1.0
 website: http://www.dinnerbone.com
 author: Dinnerbone
 description: Sample custom world generator for Bukkit
+load: startup
 commands:
   moon:
     description: Sends you to the moon!
