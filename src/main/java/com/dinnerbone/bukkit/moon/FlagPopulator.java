@@ -1,4 +1,3 @@
-
 package com.dinnerbone.bukkit.moon;
 
 import java.util.Random;
@@ -39,7 +38,7 @@ public class FlagPopulator extends BlockPopulator {
                 top.setType(Material.FENCE);
             }
 
-            Block signBlock = top.getFace(direction);
+            Block signBlock = top.getRelative(direction);
             signBlock.setType(Material.WALL_SIGN);
             BlockState state = signBlock.getState();
 
