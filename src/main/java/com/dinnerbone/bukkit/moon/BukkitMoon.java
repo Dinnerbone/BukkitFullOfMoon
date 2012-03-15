@@ -3,6 +3,8 @@ package com.dinnerbone.bukkit.moon;
 
 import org.bukkit.Bukkit;
 import org.bukkit.World;
+import org.bukkit.WorldCreator;
+import org.bukkit.World.Environment;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.generator.ChunkGenerator;
@@ -35,7 +37,10 @@ public class BukkitMoon extends JavaPlugin {
 
     public static World getMoon() {
         if (moon == null) {
-            moon = Bukkit.getServer().createWorld(WORLD_NAME, World.Environment.NORMAL, new MoonChunkGenerator());
+            WorldCreator wc = new WorldCreator(WORLD_NAME);
+            wc.environment(Environment.NORMAL);
+            wc.generator(new MoonChunkGenerator());
+            moon = Bukkit.getServer().createWorld(wc);
         }
 
         return moon;

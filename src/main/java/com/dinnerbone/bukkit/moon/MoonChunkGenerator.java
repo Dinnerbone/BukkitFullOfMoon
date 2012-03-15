@@ -5,8 +5,10 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 import org.bukkit.Location;
+import org.bukkit.block.Biome;
 import org.bukkit.generator.BlockPopulator;
 import org.bukkit.generator.ChunkGenerator;
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.util.noise.NoiseGenerator;
@@ -31,15 +33,24 @@ public class MoonChunkGenerator extends ChunkGenerator {
         return NoiseGenerator.floor(result);
     }
     
-    public byte[] generate(World world, Random random, int cx, int cz) {
-        byte[] result = new byte[32768];
-
+    private void setBlock(byte[][] rslt, int x, int y, int z, int blkid) {
+        if(rslt[y >> 4] == null) {
+            rslt[y >> 4] = new byte[4096];
+        }
+        rslt[y >> 4][((y & 0xF) << 8) | (z << 4) | x] = (byte)blkid;
+    }
+    
+    @Override
+    public byte[][] generateBlockSections(World world, Random random, int cx, int cz, BiomeGrid biomes) {
+        byte[][] result = new byte[16][];
+        
         for (int x = 0; x < 16; x++) {
             for (int z = 0; z < 16; z++) {
                 int height = getHeight(world, cx + x * 0.0625, cz + z * 0.0625, 2) + 60;
                 for (int y = 0; y < height; y++) {
-                    result[(x * 16 + z) * 128 + y] = (byte)Material.SPONGE.getId();
+                    setBlock(result, x, y, z, Material.SPONGE.getId());
                 }
+                biomes.setBiome(x, z, Biome.DESERT);
             }
         }
 
