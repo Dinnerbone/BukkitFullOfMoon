@@ -20,7 +20,7 @@ public class FlagPopulator extends BlockPopulator {
             int centerX = (source.getX() << 4) + random.nextInt(16);
             int centerZ = (source.getZ() << 4) + random.nextInt(16);
             int centerY = world.getHighestBlockYAt(centerX, centerZ);
-            BlockFace direction = null;
+            BlockFace direction;
             Block top = null;
             int dir = random.nextInt(4);
 
@@ -39,7 +39,7 @@ public class FlagPopulator extends BlockPopulator {
                 top.setType(Material.FENCE);
             }
 
-            Block signBlock = top.getFace(direction);
+            Block signBlock = top.getRelative(direction);
             signBlock.setType(Material.WALL_SIGN);
             BlockState state = signBlock.getState();
 

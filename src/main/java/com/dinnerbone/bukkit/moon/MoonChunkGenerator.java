@@ -31,6 +31,7 @@ public class MoonChunkGenerator extends ChunkGenerator {
         return NoiseGenerator.floor(result);
     }
     
+    @Override
     public byte[] generate(World world, Random random, int cx, int cz) {
         byte[] result = new byte[32768];
 
