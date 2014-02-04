@@ -5,6 +5,12 @@
   <version>0.0.1-SNAPSHOT</version>
   <name>BukkitFullOfMoon</name>
   <url>http://www.bukkit.org</url>
+  <repositories>
+      <repository>
+          <id>bukkit-repo</id>
+          <url>http://repo.bukkit.org/content/groups/public</url>
+      </repository>
+  </repositories>
   <build>
       <plugins>
           <plugin>
@@ -22,7 +28,7 @@
     <dependency>
       <groupId>org.bukkit</groupId>
       <artifactId>bukkit</artifactId>
-      <version>0.0.1-SNAPSHOT</version>
+      <version>1.2.3-R0.1</version>
       <type>jar</type>
       <scope>compile</scope>
     </dependency>
