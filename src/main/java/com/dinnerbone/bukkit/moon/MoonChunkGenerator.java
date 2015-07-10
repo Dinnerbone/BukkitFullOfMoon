@@ -38,7 +38,7 @@ public class MoonChunkGenerator extends ChunkGenerator {
             for (int z = 0; z < 16; z++) {
                 int height = getHeight(world, cx + x * 0.0625, cz + z * 0.0625, 2) + 60;
                 for (int y = 0; y < height; y++) {
-                    result[(x * 16 + z) * 128 + y] = (byte)Material.SPONGE.getId();
+                    result[(x * 16 + z) * 128 + y] = (byte)Material.ENDER_STONE.getId();
                 }
             }
         }
