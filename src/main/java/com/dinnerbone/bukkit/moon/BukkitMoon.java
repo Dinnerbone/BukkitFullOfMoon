@@ -1,48 +1,36 @@
-
 package com.dinnerbone.bukkit.moon;
 
 import org.bukkit.Bukkit;
 import org.bukkit.World;
-import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
+import org.bukkit.WorldCreator;
 import org.bukkit.generator.ChunkGenerator;
-import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class BukkitMoon extends JavaPlugin {
-    private final static String WORLD_NAME = "BukkitMoon";
-    private static World moon = null;
+	private final static String WORLD_NAME = "world_moon";
+	private static World moon = null;
 
-    public void onDisable() {
-    }
-    
-    public void onEnable() {
-        PluginDescriptionFile desc = this.getDescription();
+	@Override
+	public void onEnable() {
+		// Create command executor
+		getCommand("moon").setExecutor(new MoonCommandExec());
+		// Log status
+		this.getLogger().info("Enabled!");
+	}
 
-        System.out.println( desc.getName() + " version " + desc.getVersion() + " is enabled!" );
+	// Creates and returns a world
+	public static World getMoon() {
+		if (moon == null) {
+			WorldCreator creator = new WorldCreator(WORLD_NAME);
+			creator.environment(World.Environment.NORMAL);
+			creator.generator(new MoonChunkGenerator());
+			moon = Bukkit.getServer().createWorld(creator);
+		}
+		return moon;
+	}
 
-        getCommand("moon").setExecutor(new MoonCommandExec());
-    }
-    
-    public boolean anonymousCheck(CommandSender sender) {
-        if (!(sender instanceof Player)) {
-            sender.sendMessage("Cannot execute that command, I don't know who you are!");
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    public static World getMoon() {
-        if (moon == null) {
-            moon = Bukkit.getServer().createWorld(WORLD_NAME, World.Environment.NORMAL, new MoonChunkGenerator());
-        }
-
-        return moon;
-    }
-
-    @Override
-    public ChunkGenerator getDefaultWorldGenerator(String worldName, String id) {
-        return new MoonChunkGenerator();
-    }
+	@Override
+	public ChunkGenerator getDefaultWorldGenerator(String worldName, String id) {
+		return new MoonChunkGenerator();
+	}
 }

@@ -1,7 +1,7 @@
-
 package com.dinnerbone.bukkit.moon;
 
 import java.util.Random;
+
 import org.bukkit.Chunk;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -12,48 +12,59 @@ import org.bukkit.block.Sign;
 import org.bukkit.generator.BlockPopulator;
 
 public class FlagPopulator extends BlockPopulator {
-    private static final int FLAG_CHANCE = 1; // Out of 200
-    private static final int FLAG_HEIGHT = 3;
+	// TODO: Put these in a config
+	private static final int FLAG_CHANCE = 1; 	// Out of 200
+	private static final int FLAG_HEIGHT = 3; 	// Fence post height
 
-    public void populate(World world, Random random, Chunk source) {
-        if (random.nextInt(200) <= FLAG_CHANCE) {
-            int centerX = (source.getX() << 4) + random.nextInt(16);
-            int centerZ = (source.getZ() << 4) + random.nextInt(16);
-            int centerY = world.getHighestBlockYAt(centerX, centerZ);
-            BlockFace direction = null;
-            Block top = null;
-            int dir = random.nextInt(4);
+	@Override
+	public void populate(World world, Random random, Chunk source) {
+		if (random.nextInt(200) <= FLAG_CHANCE) {
+			// Create random X/Y in world coords
+			int centerX = (source.getX() << 4) + random.nextInt(16);
+			int centerZ = (source.getZ() << 4) + random.nextInt(16);
+			int centerY = world.getHighestBlockYAt(centerX, centerZ);
+			BlockFace direction = null;
+			Block top = null;
 
-            if (dir == 0) {
-                direction = BlockFace.NORTH;
-            } else if (dir == 1) {
-                direction = BlockFace.EAST;
-            } else if (dir == 2) {
-                direction = BlockFace.SOUTH;
-            } else {
-                direction = BlockFace.WEST;
-            }
+			// Choose random direction
+			int dir = random.nextInt(4);
+			switch (dir) {
+			case 0:
+				direction = BlockFace.NORTH;
+				break;
+			case 1:
+				direction = BlockFace.EAST;
+				break;
+			case 2:
+				direction = BlockFace.SOUTH;
+				break;
+			case 3:
+				direction = BlockFace.WEST;
+			}
 
-            for (int y = centerY; y < centerY + FLAG_HEIGHT; y++) {
-                top = world.getBlockAt(centerX, y, centerZ);
-                top.setType(Material.FENCE);
-            }
+			// Create the fence post
+			for (int y = centerY; y < centerY + FLAG_HEIGHT; y++) {
+				top = world.getBlockAt(centerX, y, centerZ);
+				top.setType(Material.FENCE);
+			}
 
-            Block signBlock = top.getFace(direction);
-            signBlock.setType(Material.WALL_SIGN);
-            BlockState state = signBlock.getState();
+			// Create a sign in the direction
+			Block signBlock = top.getRelative(direction);
+			signBlock.setType(Material.WALL_SIGN);
+			BlockState state = signBlock.getState();
 
-            if (state instanceof Sign) {
-                Sign sign = (Sign)state;
-                org.bukkit.material.Sign data = (org.bukkit.material.Sign)state.getData();
+			// Set the sign data
+			if (state instanceof Sign) {
+				Sign sign = (Sign)state;
+				org.bukkit.material.Sign data = (org.bukkit.material.Sign)state.getData();
 
-                data.setFacingDirection(direction);
-                sign.setLine(0, "---------|*****");
-                sign.setLine(1, "---------|*****");
-                sign.setLine(2, "-------------");
-                sign.setLine(3, "-------------");
-                sign.update(true);
-            }
-        }
-    }
+				data.setFacingDirection(direction);
+				sign.setLine(0, "---------|*****");
+				sign.setLine(1, "---------|*****");
+				sign.setLine(2, "-------------");
+				sign.setLine(3, "-------------");
+				sign.update(true);
+			}
+		}
+	}
 }
