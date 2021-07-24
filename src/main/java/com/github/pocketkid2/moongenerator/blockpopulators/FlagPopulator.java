@@ -9,6 +9,8 @@ import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.block.BlockState;
 import org.bukkit.block.Sign;
+import org.bukkit.block.data.BlockData;
+import org.bukkit.block.data.type.WallSign;
 import org.bukkit.generator.BlockPopulator;
 
 public class FlagPopulator extends BlockPopulator {
@@ -45,20 +47,23 @@ public class FlagPopulator extends BlockPopulator {
 			// Create the fence post
 			for (int y = centerY; y < centerY + FLAG_HEIGHT; y++) {
 				top = world.getBlockAt(centerX, y, centerZ);
-				top.setType(Material.FENCE);
+				top.setType(Material.OAK_FENCE);
 			}
 
 			// Create a sign in the direction
 			Block signBlock = top.getRelative(direction);
-			signBlock.setType(Material.WALL_SIGN);
+			signBlock.setType(Material.OAK_WALL_SIGN);
 			BlockState state = signBlock.getState();
+			BlockData data = signBlock.getBlockData();
 
 			// Set the sign data
 			if (state instanceof Sign) {
 				Sign sign = (Sign)state;
-				org.bukkit.material.Sign data = (org.bukkit.material.Sign)state.getData();
-
-				data.setFacingDirection(direction);
+				
+				if (data instanceof WallSign) {
+					WallSign ws = (WallSign) data;
+					ws.setFacing(direction);
+				}
 				sign.setLine(0, "---------|*****");
 				sign.setLine(1, "---------|*****");
 				sign.setLine(2, "-------------");
