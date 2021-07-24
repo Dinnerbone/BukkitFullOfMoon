@@ -43,7 +43,7 @@ public class MoonChunkGenerator extends ChunkGenerator {
 				// Loop through each Y value in the column
 				for (int y = 0; y < height; y++) {
 					// Set the block to be stone if more than 5 blocks down from the surface
-					if (y < (height - 5)) {
+					if (y < (height - 1)) {
 						data.setBlock(x, y, z, Material.STONE);
 					} else {
 						data.setBlock(x, y, z, Material.GRAVEL);
