@@ -9,7 +9,7 @@ import org.bukkit.generator.BlockPopulator;
 import org.bukkit.util.BlockVector;
 import org.bukkit.util.Vector;
 
-public class MoonCraterPopulator extends BlockPopulator {
+public class CraterPopulator extends BlockPopulator {
 	// TODO: Put these in a config
 	private static final int CRATER_CHANCE = 45; 		// Out of 100
 	private static final int BIG_CRATER_CHANCE = 10; 	// Out of 100
