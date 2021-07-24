@@ -1,4 +1,4 @@
-package com.github.pocketkid2.moongenerator;
+package com.github.pocketkid2.moongenerator.chunkgenerators;
 
 import java.util.Arrays;
 import java.util.List;
@@ -11,6 +11,9 @@ import org.bukkit.generator.BlockPopulator;
 import org.bukkit.generator.ChunkGenerator;
 import org.bukkit.util.noise.NoiseGenerator;
 import org.bukkit.util.noise.SimplexNoiseGenerator;
+
+import com.github.pocketkid2.moongenerator.blockpopulators.FlagPopulator;
+import com.github.pocketkid2.moongenerator.blockpopulators.MoonCraterPopulator;
 
 public class MoonChunkGenerator extends ChunkGenerator {
 	private NoiseGenerator generator;

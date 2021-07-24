@@ -6,6 +6,8 @@ import org.bukkit.WorldCreator;
 import org.bukkit.generator.ChunkGenerator;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import com.github.pocketkid2.moongenerator.chunkgenerators.MoonChunkGenerator;
+
 public class MoonGenerator extends JavaPlugin {
 	private final static String WORLD_NAME = "world_moon";
 	private static World moon = null;

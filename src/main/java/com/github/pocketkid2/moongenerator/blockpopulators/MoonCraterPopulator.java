@@ -1,4 +1,4 @@
-package com.github.pocketkid2.moongenerator;
+package com.github.pocketkid2.moongenerator.blockpopulators;
 
 import java.util.Random;
 
