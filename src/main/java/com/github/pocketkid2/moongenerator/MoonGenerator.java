@@ -1,4 +1,4 @@
-package com.dinnerbone.bukkit.moon;
+package com.github.pocketkid2.moongenerator;
 
 import org.bukkit.Bukkit;
 import org.bukkit.World;
@@ -6,7 +6,7 @@ import org.bukkit.WorldCreator;
 import org.bukkit.generator.ChunkGenerator;
 import org.bukkit.plugin.java.JavaPlugin;
 
-public class BukkitMoon extends JavaPlugin {
+public class MoonGenerator extends JavaPlugin {
 	private final static String WORLD_NAME = "world_moon";
 	private static World moon = null;
 

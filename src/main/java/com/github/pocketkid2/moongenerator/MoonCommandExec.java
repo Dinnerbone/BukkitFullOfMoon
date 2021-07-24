@@ -1,4 +1,4 @@
-package com.dinnerbone.bukkit.moon;
+package com.github.pocketkid2.moongenerator;
 
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -11,7 +11,7 @@ public class MoonCommandExec implements CommandExecutor {
 		// Must be a player to teleport to world
 		if (sender instanceof Player) {
 			Player player = (Player)sender;
-			player.teleport(BukkitMoon.getMoon().getSpawnLocation());
+			player.teleport(MoonGenerator.getMoon().getSpawnLocation());
 		} else {
 			sender.sendMessage("You must be a player to execute this command!");
 		}

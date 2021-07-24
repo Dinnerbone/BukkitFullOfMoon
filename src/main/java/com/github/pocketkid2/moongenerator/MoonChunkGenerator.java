@@ -1,4 +1,4 @@
-package com.dinnerbone.bukkit.moon;
+package com.github.pocketkid2.moongenerator;
 
 import java.util.Arrays;
 import java.util.List;
