@@ -18,7 +18,7 @@ import com.github.pocketkid2.moongenerator.blockpopulators.FlagPopulator;
 
 public class MoonChunkGenerator extends ChunkGenerator {
 
-	private static final int CHUNK_SIZE = 16;
+	private static final int SPAWN_RADIUS = 100;
 
 	private NoiseGenerator generator;
 
@@ -44,9 +44,9 @@ public class MoonChunkGenerator extends ChunkGenerator {
 	public ChunkGenerator.ChunkData generateChunkData(World world, Random random, int cx, int cz, ChunkGenerator.BiomeGrid biome) {
 		var data = createChunkData(world);
 		// Loop through each X and Z value
-		for (var x = 0; x < CHUNK_SIZE; x++)
-			for (var z = 0; z < CHUNK_SIZE; z++) {
-				var height = getHeight(world, cx * CHUNK_SIZE + x, cz * CHUNK_SIZE + z);
+		for (var x = 0; x < MoonGenerator.CHUNK_SIZE; x++)
+			for (var z = 0; z < MoonGenerator.CHUNK_SIZE; z++) {
+				var height = getHeight(world, cx * MoonGenerator.CHUNK_SIZE + x, cz * MoonGenerator.CHUNK_SIZE + z);
 				for (var y = 0; y < height; y++)
 					if (y == 0)
 						data.setBlock(x, y, z, Material.BEDROCK);
@@ -61,18 +61,18 @@ public class MoonChunkGenerator extends ChunkGenerator {
 	@Override
 	public List<BlockPopulator> getDefaultPopulators(World world) {
 		List<BlockPopulator> populators = new ArrayList<>();
-		if (plugin.areCratersOn())
-			populators.add(new CraterPopulator());
-		if (plugin.areFlagsOn())
-			populators.add(new FlagPopulator());
+		if (plugin.areCratersEnabled())
+			populators.add(new CraterPopulator(plugin));
+		if (plugin.areFlagsEnabled())
+			populators.add(new FlagPopulator(plugin));
 		return populators;
 	}
 
 	@Override
 	public Location getFixedSpawnLocation(World world, Random random) {
 		// Create random position within 100 blocks of 0,0
-		var x = random.nextInt(200) - 100;
-		var z = random.nextInt(200) - 100;
+		var x = random.nextInt(SPAWN_RADIUS * 2) - SPAWN_RADIUS;
+		var z = random.nextInt(SPAWN_RADIUS * 2) - SPAWN_RADIUS;
 		var y = world.getHighestBlockYAt(x, z);
 		return new Location(world, x, y, z);
 	}

@@ -7,67 +7,80 @@ import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
-import org.bukkit.block.BlockState;
 import org.bukkit.block.Sign;
-import org.bukkit.block.data.BlockData;
 import org.bukkit.block.data.type.WallSign;
 import org.bukkit.generator.BlockPopulator;
 
+import com.github.pocketkid2.moongenerator.MoonGenerator;
+
 public class FlagPopulator extends BlockPopulator {
-	// TODO: Put these in a config
-	private static final int FLAG_CHANCE = 1; 	// Out of 200
-	private static final int FLAG_HEIGHT = 3; 	// Fence post height
+
+	private MoonGenerator plugin;
+
+	public FlagPopulator(MoonGenerator p) {
+		plugin = p;
+	}
 
 	@Override
 	public void populate(World world, Random random, Chunk source) {
-		if (random.nextInt(200) <= FLAG_CHANCE) {
+		if (random.nextInt(plugin.getFlagPercentageScale()) <= plugin.getFlagChance()) {
 			// Create random X/Y in world coords
-			int centerX = (source.getX() << 4) + random.nextInt(16);
-			int centerZ = (source.getZ() << 4) + random.nextInt(16);
-			int centerY = world.getHighestBlockYAt(centerX, centerZ);
-			BlockFace direction = null;
+			var startX = (source.getX() << 4) + random.nextInt(MoonGenerator.CHUNK_SIZE);
+			var startZ = (source.getZ() << 4) + random.nextInt(MoonGenerator.CHUNK_SIZE);
+			var startY = world.getHighestBlockYAt(startX, startZ) + 1;
+			BlockFace woolDirection;
+			BlockFace signPlaceDirection;
+			BlockFace signFaceDirection;
 			Block top = null;
 
 			// Choose random direction
-			int dir = random.nextInt(4);
-			switch (dir) {
-			case 0:
-				direction = BlockFace.NORTH;
-				break;
-			case 1:
-				direction = BlockFace.EAST;
-				break;
-			case 2:
-				direction = BlockFace.SOUTH;
-				break;
-			case 3:
-				direction = BlockFace.WEST;
+			signPlaceDirection = switch (random.nextInt(4)) {
+			case 0 -> {
+				woolDirection = BlockFace.NORTH;
+				signFaceDirection = BlockFace.WEST;
+				yield BlockFace.EAST;
 			}
+			case 1 -> {
+				woolDirection = BlockFace.EAST;
+				signFaceDirection = BlockFace.NORTH;
+				yield BlockFace.SOUTH;
+			}
+			case 2 -> {
+				woolDirection = BlockFace.SOUTH;
+				signFaceDirection = BlockFace.EAST;
+				yield BlockFace.WEST;
+			}
+			case 3 -> {
+				woolDirection = BlockFace.WEST;
+				signFaceDirection = BlockFace.SOUTH;
+				yield BlockFace.NORTH;
+			}
+			default -> throw new IllegalArgumentException("Unexpected value: " + random.nextInt(4));
+			};
 
 			// Create the fence post
-			for (int y = centerY; y < centerY + FLAG_HEIGHT; y++) {
-				top = world.getBlockAt(centerX, y, centerZ);
+			for (var y = startY; y < startY + plugin.getFlagHeight(); y++) {
+				top = world.getBlockAt(startX, y, startZ);
 				top.setType(Material.OAK_FENCE);
 			}
 
 			// Create a sign in the direction
-			Block signBlock = top.getRelative(direction);
+			var woolBlock = top.getRelative(woolDirection);
+			woolBlock.setType(plugin.getFlagMaterial());
+
+			var signBlock = woolBlock.getRelative(signPlaceDirection);
 			signBlock.setType(Material.OAK_WALL_SIGN);
-			BlockState state = signBlock.getState();
-			BlockData data = signBlock.getBlockData();
+
+			var state = signBlock.getState();
+			var data = signBlock.getBlockData();
 
 			// Set the sign data
-			if (state instanceof Sign) {
-				Sign sign = (Sign)state;
-				
-				if (data instanceof WallSign) {
-					WallSign ws = (WallSign) data;
-					ws.setFacing(direction);
-				}
-				sign.setLine(0, "---------|*****");
-				sign.setLine(1, "---------|*****");
-				sign.setLine(2, "-------------");
-				sign.setLine(3, "-------------");
+			if (state instanceof Sign sign) {
+				if (data instanceof WallSign ws)
+					ws.setFacing(signFaceDirection);
+				if (plugin.getFlagText().size() >= MoonGenerator.SIGN_LINES)
+					for (var i = 0; i < MoonGenerator.SIGN_LINES; i++)
+						sign.setLine(i, plugin.getFlagText().get(i));
 				sign.update(true);
 			}
 		}
