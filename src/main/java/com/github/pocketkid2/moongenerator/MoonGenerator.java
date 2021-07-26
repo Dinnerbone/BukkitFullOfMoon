@@ -1,9 +1,7 @@
 package com.github.pocketkid2.moongenerator;
 
-import java.util.List;
 import java.util.Random;
 
-import org.bukkit.Material;
 import org.bukkit.generator.ChunkGenerator;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -26,14 +24,6 @@ public class MoonGenerator extends JavaPlugin {
 	private int min_crater_radius;
 	private int max_crater_radius;
 
-	// FLAG SETTINGS
-	private boolean flags_enabled;
-	private int flag_chance;
-	private int flag_percentage_scale;
-	private int flag_height;
-	private Material flag_material;
-	private List<String> flag_text;
-
 	@Override
 	public void onEnable() {
 		saveDefaultConfig();
@@ -50,14 +40,6 @@ public class MoonGenerator extends JavaPlugin {
 		crater_percentage_scale = cfg.getInt("craters.percentage", 100);
 		min_crater_radius = cfg.getInt("craters.min-radius", 8);
 		max_crater_radius = cfg.getInt("craters.max-radius", 24);
-
-		// FLAG SETTINGS
-		flags_enabled = cfg.getBoolean("flags.enabled", true);
-		flag_chance = cfg.getInt("flags.chance", 5);
-		flag_percentage_scale = cfg.getInt("flags.percentage", 1000);
-		flag_height = cfg.getInt("flags.height", 3);
-		flag_material = Material.valueOf(cfg.getString("flags.material", "WHITE_WOOL"));
-		flag_text = cfg.getStringList("flags.text");
 
 		getLogger().info("Enabled!");
 	}
@@ -111,34 +93,6 @@ public class MoonGenerator extends JavaPlugin {
 
 	public int getMaxCraterRadius() {
 		return max_crater_radius;
-	}
-
-	//
-	// FLAG GENERATION OPTIONS
-	//
-
-	public boolean areFlagsEnabled() {
-		return flags_enabled;
-	}
-
-	public int getFlagChance() {
-		return flag_chance;
-	}
-
-	public int getFlagPercentageScale() {
-		return flag_percentage_scale;
-	}
-
-	public int getFlagHeight() {
-		return flag_height;
-	}
-
-	public Material getFlagMaterial() {
-		return flag_material;
-	}
-
-	public List<String> getFlagText() {
-		return flag_text;
 	}
 
 	//

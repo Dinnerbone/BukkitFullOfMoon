@@ -14,7 +14,6 @@ import org.bukkit.util.noise.SimplexNoiseGenerator;
 
 import com.github.pocketkid2.moongenerator.MoonGenerator;
 import com.github.pocketkid2.moongenerator.blockpopulators.CraterPopulator;
-import com.github.pocketkid2.moongenerator.blockpopulators.FlagPopulator;
 
 public class MoonChunkGenerator extends ChunkGenerator {
 
@@ -63,8 +62,6 @@ public class MoonChunkGenerator extends ChunkGenerator {
 		List<BlockPopulator> populators = new ArrayList<>();
 		if (plugin.areCratersEnabled())
 			populators.add(new CraterPopulator(plugin));
-		if (plugin.areFlagsEnabled())
-			populators.add(new FlagPopulator(plugin));
 		return populators;
 	}
 
