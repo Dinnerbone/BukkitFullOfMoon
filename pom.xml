@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.github.pocketkid2</groupId>
 	<artifactId>moongenerator</artifactId>
-	<version>0.2.0</version>
+	<version>0.3.0</version>
 	<name>MoonGenerator</name>
 	<url></url>
 	<properties>
