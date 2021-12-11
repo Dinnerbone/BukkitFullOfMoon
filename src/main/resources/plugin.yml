@@ -1,8 +1,7 @@
 name: ${name}
 version: ${version}
 main: ${groupId}.${artifactId}.${name}
-
 description: ${description}
-api-version: 1.17
+api-version: 1.18
 load: STARTUP
 author: ${author}
