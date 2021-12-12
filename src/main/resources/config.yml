@@ -1,0 +1,26 @@
+# This is how many blocks up and down the terrain height can vary typically.
+height-variance: 5
+
+# The larger this number, the more gradual and gentle the terrain will be
+noise-scale: 64
+
+# This is roughly how many blocks tall the chunks are. In Vanilla Minecraft, sea level is 64. Here, the default is 60 blocks. So with a height variance of 5, you can expect the terrain to be in the 56 blocks to 64 blocks tall range.
+depth: 60
+
+# Crater settings
+craters:
+
+    # Set this to false to disable crater generation
+    enabled: true
+    
+    # Chance that craters will generate in a given chunk
+    chance: 2
+    
+    # Percentage scale (chance / percentage) (default 8 / 100 = 8%)
+    percentage: 100
+    
+    # Minimum crater radius
+    min-radius: 8
+    
+    # Maximum crater radius
+    max-radius: 24

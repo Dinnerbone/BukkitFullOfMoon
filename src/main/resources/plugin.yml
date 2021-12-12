@@ -1,11 +1,7 @@
-name: BukkitFullOfMoon
-main: com.dinnerbone.bukkit.moon.BukkitMoon
-version: 0.1.0
-website: http://www.dinnerbone.com
-author: Dinnerbone
-description: Sample custom world generator for Bukkit
-load: startup
-commands:
-  moon:
-    description: Sends you to the moon!
-    usage: /moon
+name: ${name}
+version: ${version}
+main: ${groupId}.${artifactId}.${name}
+description: ${description}
+api-version: 1.18
+load: STARTUP
+author: ${author}
